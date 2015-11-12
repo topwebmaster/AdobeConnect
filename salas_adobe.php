@@ -5,7 +5,7 @@ include("AdobeConnectClient.class.php");
 
 $client = new AdobeConnectClient();
 
-$user = $_GET['user'];
+$user = $_POST['moderator'];
 
 $table = "<table border='0' cellspacing='0' cellpadding='6'>" .
         "<tr><th class='salas' width='90'>Salas</th>" .
@@ -44,11 +44,11 @@ foreach ($mettings['my-meetings']['meeting'] as $k => $v) {
                 $acl_id = $value['@attributes']['sco-id'];
                 $comment = (isset($value['description'])) ? $value['description'] : '';
                 $table .= "<tr><td>&nbsp;</td>" .
-                        "<td>" . stristr($value['date-begin'], 'T', true) . ' - ' . $value['name'] . "</td>" .
-                        "<td>" . stristr($value['duration'], '.', true) . "</td>" .
-                        "<td><a href='https://utp.adobeconnect.com" .
+                        "<td class='attendance'>" . stristr($value['date-begin'], 'T', true) . ' - ' . $value['name'] . "<ul><li>Item 1</li><li>Item 2</li><li>Item 3</li><li>Item 4</li><li>Item 5</li></ul></td>" .
+                        "<td valign='top'>" . stristr($value['duration'], '.', true) . "</td>" .
+                        "<td valign='top'><a href='https://utp.adobeconnect.com" .
                         $value['url-path'] . "' target='_blank'>https://utp.adobeconnect.com" . $value['url-path'] . "</a></td>" . 
-                        "<td>".$comment."</td></tr><th>";
+                        "<td valign='top'>".$comment."</td></tr><th>";
 
                 $client->setPublicRecordings($acl_id);
             }
@@ -98,6 +98,18 @@ $table .= "</table>";
                 font-weight: bold;
             }
         </style>
+        <script type="text/javascript" src="jquery-2.1.4.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $('.attendance ul').css({display:'none'});
+                $('.attendance').css({cursor:'pointer'});
+                $('.attendance').each(function(){
+                    $(this).click(function(){
+                        $(this).find('ul').toggle('slow', 'linear');
+                    });
+                });
+            });
+        </script>
     </head>
     <body>
         <div id="container">

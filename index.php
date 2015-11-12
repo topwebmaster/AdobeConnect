@@ -31,8 +31,7 @@
                     });
                     if ($.isValid) {
                         $('#btn_send').attr('disabled', true).val('Consultando, Espere por favor...');
-                        var user = $('#select_salas').val();
-                        document.location.href = "salas_adobe.php?user=" + user;
+                        document.frmsalas.submit();
                     }
                 });
             });
@@ -40,17 +39,19 @@
     </head>
     <body>
         <div id="container">
-            <h1>Adobe connect</h1>
-            <label for="select_salas">Seleccione una sala: </label>
-            <select id="select_salas">
-                <option value="0">:::: seleccione ::::</option>
-                <?php
-                for ($i = 1; $i <= 14; $i++) {
-                    echo "<option value='" . $i . "'>Moderador " . $i . "</option>";
-                }
-                ?>
-            </select>
-            <input type="button" id="btn_send" value="Consultar" />
+            <form name="frmsalas" id="frmsalas" method="post" action="salas_adobe.php">
+                <h1>Adobe connect</h1>
+                <label for="select_salas">Seleccione una sala: </label>
+                <select id="select_salas" name="moderator">
+                    <option value="0">:::: seleccione ::::</option>
+                    <?php
+                    for ($i = 1; $i <= 14; $i++) {
+                        echo "<option value='" . $i . "'>Moderador " . $i . "</option>";
+                    }
+                    ?>
+                </select>
+                <input type="button" id="btn_send" value="Consultar" />
+            </form>
             <hr>
         </div>
     </body>
