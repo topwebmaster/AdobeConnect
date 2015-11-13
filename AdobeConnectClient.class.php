@@ -289,6 +289,20 @@ class AdobeConnectClient {
         return $result;
     }
 
+    /**
+    * Get report sessions
+    * @param int $scoid
+    * @return mixed
+    */
+    public function getReportSessions( $sco_id ){
+        $action = "report-meeting-sessions";
+        $result = $this->makeRequest($action, array(
+            'sco-id' => $sco_id
+        ));
+
+        return $result;
+    }
+
     public function __destruct() {
         @curl_close($this->curl);
     }

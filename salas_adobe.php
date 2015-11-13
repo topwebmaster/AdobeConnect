@@ -18,7 +18,6 @@ $client->setUser('moderador' . $user);
 $client->setPassword('utp.moderador' . $user);
 
 $client->makeAuth();
-//echo "<pre>";
 $mettings = $client->getAllMeetings();
 $count = 0;
 foreach ($mettings['my-meetings']['meeting'] as $k => $v) {
@@ -33,8 +32,10 @@ foreach ($mettings['my-meetings']['meeting'] as $k => $v) {
     /*     * ***** Comentar esto si se quiere ver solo salas   *** */
     $folder = $v['@attributes']['sco-id'];
     $records = $client->getRecordings($folder);
-    /* print_r($records);
-      exit; */
+    
+    /*echo "<pre>";
+    print_r($records);
+    exit;*/
     if (!empty($records['recordings'])) {
 
         if ($records['recordings']['sco'][0]) {
@@ -61,9 +62,9 @@ foreach ($mettings['my-meetings']['meeting'] as $k => $v) {
             $comment = (isset($records['recordings']['sco']['description'])) ? $records['recordings']['sco']['description'] : '';
 
             $table .= "<tr><td>&nbsp;</td>" .
-                    "<td>" . stristr($fecha, 'T', true) . ' - ' . $name . "</td>" .
-                    "<td>" . stristr($duration, '.', true) . "</td>" .
-                    "<td><a href='https://utp.adobeconnect.com" .
+                    "<td>" . stristr($fecha, 'T', true) . ' - ' . $name . "</td>" . 
+                    "<td>" . stristr($duration, '.', true) . "</td>" . 
+                    "<td><a href='https://utp.adobeconnect.com" . 
                     $url . "' target='_blank'>https://utp.adobeconnect.com" . $url . "</a></td>" . 
                     "<td>".$comment."</td></tr><th>";
 
@@ -114,7 +115,7 @@ $table .= "</table>";
     <body>
         <div id="container">
             <h1 style="display: inline;">Moderador <?php echo $user; ?> / Grabaciones</h1>
-            <span style="float: right;"><a href="index.php"><< Volver</a></span>
+            <span style="float: right;"><a href="index.php">&laquo; Volver</a></span>
             <hr>
             <?php
                 print $table;
