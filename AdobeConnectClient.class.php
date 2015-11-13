@@ -246,7 +246,7 @@ class AdobeConnectClient {
     
     /**
      * Get the recordgind list
-     * @param type $folder
+     * @param int $folder
      * @return mixed
      */
     public function getRecordings($folder){
@@ -260,7 +260,7 @@ class AdobeConnectClient {
     
     /**
      * Set all recordings as Public
-     * @param type $acl_id
+     * @param int $acl_id
      * @return mixed
      */
     public function setPublicRecordings($acl_id){
@@ -273,6 +273,12 @@ class AdobeConnectClient {
         
         return $result;
     }
+
+    /**
+    * Get report attendance
+    * @param int $scoid
+    * @return mixed
+    */
 
     public function getReportAttendance( $scoid ){
         $action = 'report-meeting-attendance';
