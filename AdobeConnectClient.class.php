@@ -79,9 +79,9 @@ class AdobeConnectClient {
      */
     public function makeAuth() {
         $this->makeRequest('login', array(
-            'login' => $this->getUser(),
-            'password' => $this->getPassword()
-                )
+                'login' => $this->getUser(),
+                'password' => $this->getPassword()
+            )
         );
         $this->is_authorized = true;
         return $this;
@@ -280,10 +280,11 @@ class AdobeConnectClient {
     * @return mixed
     */
 
-    public function getReportAttendance( $scoid ){
-        $action = 'report-meeting-attendance';
+    public function getReportMeetingSessionUser( $scoid, $asset_id ){
+        $action = 'report-meeting-session-users';
         $result = $this->makeRequest($action, array(
-            'sco-id' => $scoid
+            'sco-id' => $scoid,
+            'asset-id' => $asset_id
         ));
 
         return $result;

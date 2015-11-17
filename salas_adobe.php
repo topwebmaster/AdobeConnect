@@ -32,20 +32,45 @@ foreach ($mettings['my-meetings']['meeting'] as $k => $v) {
     /*     * ***** Comentar esto si se quiere ver solo salas   *** */
     $folder = $v['@attributes']['sco-id'];
     $records = $client->getRecordings($folder);
+    $sesiones = $client->getReportSessions($folder);
     
-    /*echo "<pre>";
-    print_r($records);
-    exit;*/
+    //echo "<pre>";
+    //print_r($records);
+    /*exit;*/
+    $ul = "";
     if (!empty($records['recordings'])) {
 
         if ($records['recordings']['sco'][0]) {
 
-            foreach ($records['recordings']['sco'] as $key => $value) {
-
+            foreach ($records['recordings']['sco'] as $value) {
                 $acl_id = $value['@attributes']['sco-id'];
                 $comment = (isset($value['description'])) ? $value['description'] : '';
+
+
+                $ul .= "<ul>";
+                foreach ($sesiones['report-meeting-sessions']['row'] as $v) {
+                    $brec = strtotime($value['date-begin']);
+                    $erec = strtotime($value['date-end']);
+
+                    $bses = strtotime($v['date-created']);
+                    $eses = strtotime($v['date-end']);
+
+                    if($brec >= $bses && $erec <= $eses){
+                        $asset_id = $v['@attributes']['asset-id'];
+                        $attendance = $client->getReportMeetingSessionUser($folder, $asset_id);
+                        /*$oneside = array_map("serialize", $attendance['report-meeting-session-users']['row']);
+                        $uoneside = array_unique($oneside);
+                        $mside = array_map("unserialize", $uoneside);*/
+                        foreach ($attendance['report-meeting-session-users']['row'] as $usersession) {
+                            $ul .= "<li>".$usersession['principal-name']."</li>";
+                        }
+                    }
+                }
+                $ul .= "</ul>";
+
+
                 $table .= "<tr><td>&nbsp;</td>" .
-                        "<td class='attendance'>" . stristr($value['date-begin'], 'T', true) . ' - ' . $value['name'] . "<ul><li>Item 1</li><li>Item 2</li><li>Item 3</li><li>Item 4</li><li>Item 5</li></ul></td>" .
+                        "<td class='attendance'>" . stristr($value['date-begin'], 'T', true) . ' - ' . $value['name'] . $ul . "</td>" .
                         "<td valign='top'>" . stristr($value['duration'], '.', true) . "</td>" .
                         "<td valign='top'><a href='https://utp.adobeconnect.com" .
                         $value['url-path'] . "' target='_blank'>https://utp.adobeconnect.com" . $value['url-path'] . "</a></td>" . 
@@ -61,12 +86,35 @@ foreach ($mettings['my-meetings']['meeting'] as $k => $v) {
             $fecha = $records['recordings']['sco']['date-begin'];
             $comment = (isset($records['recordings']['sco']['description'])) ? $records['recordings']['sco']['description'] : '';
 
-            $table .= "<tr><td>&nbsp;</td>" .
-                    "<td>" . stristr($fecha, 'T', true) . ' - ' . $name . "</td>" . 
-                    "<td>" . stristr($duration, '.', true) . "</td>" . 
-                    "<td><a href='https://utp.adobeconnect.com" . 
+
+            $ul .= "<ul>";
+            foreach ($sesiones['report-meeting-sessions']['row'] as $v) {
+                $brec = strtotime($records['recordings']['sco']['date-begin']);
+                $erec = strtotime($records['recordings']['sco']['date-end']);
+
+                $bses = strtotime($v['date-created']);
+                $eses = strtotime($v['date-end']);
+
+                if($brec >= $bses && $erec <= $eses){
+                    $asset_id = $v['@attributes']['asset-id'];
+                    $attendance = $client->getReportMeetingSessionUser($folder, $asset_id);
+                    /*$oneside = array_map("serialize", $attendance['report-meeting-session-users']['row']);
+                    $uoneside = array_unique($oneside);
+                    $mside = array_map("unserialize", $uoneside);*/
+                    foreach ($attendance['report-meeting-session-users']['row'] as $usersession) {
+                        $ul .= "<li>".$usersession['principal-name']."</li>";
+                    }
+                }
+            }
+            $ul .= "</ul>";
+
+
+            $table .= "<tr><td>&nbsp;</td>" . 
+                    "<td class='attendance'>" . stristr($fecha, 'T', true) . ' - ' . $name . $ul . "</td>" . 
+                    "<td valign='top'>" . stristr($duration, '.', true) . "</td>" . 
+                    "<td valign='top'><a href='https://utp.adobeconnect.com" . 
                     $url . "' target='_blank'>https://utp.adobeconnect.com" . $url . "</a></td>" . 
-                    "<td>".$comment."</td></tr><th>";
+                    "<td valign='top'>".$comment."</td></tr><th>";
 
             $client->setPublicRecordings($acl_id);
         }
