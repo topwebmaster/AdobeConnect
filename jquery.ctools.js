@@ -223,7 +223,7 @@
             var sum = 0;
             var j = 0;
 
-            for (i = 0; i < array.length; i++) {
+            for (var i = 0; i < array.length; i++) {
 
                 j++;
                 sum += array[i];
@@ -256,7 +256,7 @@
             }
             
             var nmrdr = 0;
-            for (i = 0; i < facA.length; i++) {
+            for (var i = 0; i < facA.length; i++) {
                 
                 var val = facA[i] * facB[i];
                 
@@ -266,7 +266,7 @@
             var fac1 = 0,
                 fac2 = 0;
                 
-            for (i = 0; i < cx.length; i++) {
+            for (var i = 0; i < cx.length; i++) {
                 var val = (cx[i] - avgX);
                 
                 val = this.pow2(val);
@@ -274,7 +274,7 @@
                 fac1 += val;
             }
             
-            for (i = 0; i < cy.length; i++) {
+            for (var i = 0; i < cy.length; i++) {
                 var val = (cy[i] - avgY);
                 
                 val = this.pow2(val);
