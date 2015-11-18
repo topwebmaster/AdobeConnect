@@ -34,7 +34,9 @@
                 
                 _this.removeAttr('style');
                 
-                (_this.next().attr('id') === "sp_err_" + _this.attr('id')) &&  _this.next().remove();
+                if(_this.next().attr('id') === "sp_err_" + _this.attr('id')){
+                    _this.next().remove();
+                }
                 
                 ext.onerror = false;
                 
