@@ -242,58 +242,6 @@
             
             return i2;
         };
-
-        this.cR2 = function (cy, cx) {
-            var avgY = this.avg(cy);
-            var avgX = this.avg(cx);
-            
-            var facA = [],
-                facB = [];
-                
-            for (var i = 0; i < cy.length; i++) {
-                facA[i] = (cy[i] - avgY);
-                facB[i] = (cx[i] - avgX);
-            }
-            
-            var nmrdr = 0;
-            for (var i = 0; i < facA.length; i++) {
-                
-                var val = facA[i] * facB[i];
-                
-                nmrdr += val;
-            }
-            
-            var fac1 = 0,
-                fac2 = 0;
-                
-            for (var i = 0; i < cx.length; i++) {
-                var val = (cx[i] - avgX);
-                
-                val = this.pow2(val);
-                
-                fac1 += val;
-            }
-            
-            for (var i = 0; i < cy.length; i++) {
-                var val = (cy[i] - avgY);
-                
-                val = this.pow2(val);
-                
-                fac2 += val;
-            }
-            
-            var val = fac1 * fac2;
-            
-            val = Math.abs(val);
-            
-            var dnmdr = Math.sqrt( val );
-            
-            var cr = nmrdr / dnmdr;
-            
-            var cr2 = this.pow2(cr);
-            
-            return cr2;
-        };
     };
     
     $.extend($.expr[':'], {
