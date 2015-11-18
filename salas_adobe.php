@@ -1,7 +1,13 @@
 <?php
+/*header('Content-Type: application/vnd.ms-excel');
+header('Pragma: no-cache');
+header('Content-Disposition: attachment; filename=prueba.xls');
+header('Expires: 0');*/
+
 set_time_limit(0);
 error_reporting(0);
-include("AdobeConnectClient.class.php");
+require("AdobeConnectClient.class.php");
+require('library.php');
 
 $client = new AdobeConnectClient();
 
@@ -37,12 +43,12 @@ foreach ($mettings['my-meetings']['meeting'] as $k => $v) {
     //echo "<pre>";
     //print_r($records);
     /*exit;*/
-    $ul = "";
     if (!empty($records['recordings'])) {
 
         if ($records['recordings']['sco'][0]) {
 
             foreach ($records['recordings']['sco'] as $value) {
+                $ul = "";
                 $acl_id = $value['@attributes']['sco-id'];
                 $comment = (isset($value['description'])) ? $value['description'] : '';
 
@@ -58,11 +64,10 @@ foreach ($mettings['my-meetings']['meeting'] as $k => $v) {
                     if($brec >= $bses && $erec <= $eses){
                         $asset_id = $v['@attributes']['asset-id'];
                         $attendance = $client->getReportMeetingSessionUser($folder, $asset_id);
-                        /*$oneside = array_map("serialize", $attendance['report-meeting-session-users']['row']);
-                        $uoneside = array_unique($oneside);
-                        $mside = array_map("unserialize", $uoneside);*/
-                        foreach ($attendance['report-meeting-session-users']['row'] as $usersession) {
-                            $ul .= "<li>".$usersession['principal-name']."</li>";
+
+                        $onside = unique_multidim_array($attendance['report-meeting-session-users']['row'], "principal-name");
+                        foreach ($onside as $usersession) {
+                            $ul .= "<li>".trim($usersession['principal-name'])."</li>";
                         }
                     }
                 }
@@ -79,6 +84,7 @@ foreach ($mettings['my-meetings']['meeting'] as $k => $v) {
                 $client->setPublicRecordings($acl_id);
             }
         } else {
+            $ul = "";
             $name = $records['recordings']['sco']['name'];
             $url = $records['recordings']['sco']['url-path'];
             $acl_id = $records['recordings']['sco']['@attributes']['sco-id'];
@@ -98,11 +104,10 @@ foreach ($mettings['my-meetings']['meeting'] as $k => $v) {
                 if($brec >= $bses && $erec <= $eses){
                     $asset_id = $v['@attributes']['asset-id'];
                     $attendance = $client->getReportMeetingSessionUser($folder, $asset_id);
-                    /*$oneside = array_map("serialize", $attendance['report-meeting-session-users']['row']);
-                    $uoneside = array_unique($oneside);
-                    $mside = array_map("unserialize", $uoneside);*/
-                    foreach ($attendance['report-meeting-session-users']['row'] as $usersession) {
-                        $ul .= "<li>".$usersession['principal-name']."</li>";
+
+                    $onside = unique_multidim_array($attendance['report-meeting-session-users']['row'], "principal-name");
+                    foreach ($onside as $usersession) {
+                        $ul .= "<li>".trim($usersession['principal-name'])."</li>";
                     }
                 }
             }

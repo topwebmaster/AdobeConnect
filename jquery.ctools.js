@@ -34,7 +34,7 @@
                 
                 _this.removeAttr('style');
                 
-                (_this.next().attr('id') === "sp_err_" + _this.attr('id')) ? _this.next().remove() : null;
+                (_this.next().attr('id') === "sp_err_" + _this.attr('id')) &&  _this.next().remove();
                 
                 ext.onerror = false;
                 
@@ -157,7 +157,7 @@
         
         var code = escape(html);
         
-        $('#' + to).val("<script>\ndocument.write(unescape(\''+code+'\'));\n<\/script>");
+        $('#' + to).val('<script>\ndocument.write(unescape(\'' + code + '\'));\n<\/script>');
         
     };
     
@@ -248,7 +248,7 @@
             var facA = [],
                 facB = [];
                 
-            for (i = 0; i < cy.length; i++) {
+            for (var i = 0; i < cy.length; i++) {
                 facA[i] = (cy[i] - avgY);
                 facB[i] = (cx[i] - avgX);
             }
