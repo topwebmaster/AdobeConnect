@@ -69,7 +69,6 @@ class AdobeConnectClient {
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         $this->curl = $ch;
-        //$this->makeAuth();
     }
 
     /**
