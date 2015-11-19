@@ -35,9 +35,6 @@ foreach ($mettings['my-meetings']['meeting'] as $k => $v) {
     $records    = $client->getRecordings($folder);
     $sesiones   = $client->getReportSessions($folder);
     
-    //echo "<pre>";
-    //print_r($records);
-    /*exit;*/
     if (!empty($records['recordings'])) {
 
         if ($records['recordings']['sco'][0]) {
