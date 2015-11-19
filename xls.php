@@ -1,12 +1,18 @@
 <?php
+$header = header('Content-Type: application/vnd.ms-excel');
+$header .= header('Content-Disposition: attachment; filename=Grabaciones Moderador'.$_POST['download'].'.xls');
+$header .= header('Pragma: no-cache');
+$header .= header('Expires: 0');
+
 set_time_limit(0);
 error_reporting(0);
+
 require("AdobeConnectClient.class.php");
 require('library.php');
 
 $client = new AdobeConnectClient();
 
-$user = $_POST['moderator'];
+$user = $_POST['download'];
 
 $table = "<table border='0' cellspacing='0' cellpadding='6'>" .
         "<tr><th class='salas' width='90'>Salas</th>" .
@@ -134,73 +140,5 @@ foreach ($mettings['my-meetings']['meeting'] as $k => $v) {
     /*     * ****************** */
 }
 $table .= "</table>";
+echo $table;
 ?>
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>API Adobe Connect</title>
-        <style type="text/css">
-            body{
-                background: #f4f4f4;
-                font-family: "Arial", sans-serif;
-                font-size: 12px;
-                color: #666;
-            }
-
-            #container{
-                width: 1300px;
-                margin: auto;
-                overflow: auto;
-                background: #fff;
-                padding: 15px;
-            }
-            .salas{
-                font-size: 14px;
-                font-weight: bold;
-            }
-            .trheader{
-                text-align: center;
-                font-weight: bold;
-                border-bottom: #000 solid 1px;
-            }
-            .main_div{
-                margin: 0;
-                overflow: hidden;
-                width: 100%;
-            }
-            .li_celdas{
-                margin: 0;
-                float: left;
-                display: table-cell;
-                padding: 5px;
-                /*width: 100%;*/
-            }
-        </style>
-        <script type="text/javascript" src="jquery-2.1.4.js"></script>
-        <script type="text/javascript">
-            $(document).ready(function(){
-                $('.userlist').css({display:'none'});
-                $('.attendance').css({cursor:'pointer'});
-                $('.attendance').each(function(){
-                    $(this).click(function(){
-                        $(this).next().find('table').toggle('slow', 'linear');
-                    });
-                });
-            });
-        </script>
-    </head>
-    <body>
-        <form name="frmsalas" action="xls.php" target="_blank" method="post">
-            <div id="container">
-                <h1 style="display: inline;">Moderador <?php echo $user; ?> / Grabaciones</h1>&nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="submit" value="ExportarXLS" />
-                <input type="hidden" name="download" value="<?php echo $user; ?>">
-                <span style="float: right;"><a href="index.php">&laquo; Volver</a></span>
-                <hr>
-                <?php
-                    print $table;
-                ?>
-            </div>
-        </form>
-    </body>
-</html>
