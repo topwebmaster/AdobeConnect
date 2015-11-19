@@ -1,5 +1,5 @@
 /*********************************************************************************************************************
- * Copyright (c) 2013-2014 Cristian Tapia O.
+ * Copyright (c) 2013-2015 Cristian Tapia O.
  * Dual licensed under the MIT ( http://www.opensource.org/licenses/mit-license.php )
  * and GPL ( http://www.opensource.org/licenses/gpl-license.php ) licenses.
  **********************************************************************************************************************/
