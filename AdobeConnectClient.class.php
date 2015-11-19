@@ -109,13 +109,13 @@ class AdobeConnectClient {
      */
     public function createUser($email, $password, $first_name, $last_name, $type = 'user') {
         $result = $this->makeRequest('principal-update', array(
-            'first-name' => $first_name,
-            'last-name' => $last_name,
-            'email' => $email,
-            'password' => $password,
-            'type' => $type,
-            'has-children' => 0
-                )
+                'first-name' => $first_name,
+                'last-name' => $last_name,
+                'email' => $email,
+                'password' => $password,
+                'type' => $type,
+                'has-children' => 0
+            )
         );
         return $result;
     }
@@ -131,8 +131,8 @@ class AdobeConnectClient {
      */
     public function getUserByEmail($email, $only_id = false) {
         $result = $this->makeRequest('principal-list', array(
-            'filter-email' => $email
-                )
+                'filter-email' => $email
+            )
         );
         if (empty($result['principal-list'])) {
             throw new Exception('Cannot find user');
@@ -191,12 +191,12 @@ class AdobeConnectClient {
      */
     public function createFolder($name, $url) {
         $result = $this->makeRequest('sco-update', array(
-            'type' => 'folder',
-            'name' => $name,
-            'folder-id' => self::FOLDER_ID,
-            'depth' => 1,
-            'url-path' => $url
-                )
+                'type' => 'folder',
+                'name' => $name,
+                'folder-id' => self::FOLDER_ID,
+                'depth' => 1,
+                'url-path' => $url
+            )
         );
         return $result['sco']['@attributes']['sco-id'];
     }
@@ -214,13 +214,13 @@ class AdobeConnectClient {
      */
     public function createMeeting($folder_id, $name, $date_begin, $date_end, $url) {
         $result = $this->makeRequest('sco-update', array(
-            'type' => 'meeting',
-            'name' => $name,
-            'folder-id' => $folder_id,
-            'date-begin' => $date_begin,
-            'date-end' => $date_end,
-            'url-path' => $url
-                )
+                'type' => 'meeting',
+                'name' => $name,
+                'folder-id' => $folder_id,
+                'date-begin' => $date_begin,
+                'date-end' => $date_end,
+                'url-path' => $url
+            )
         );
         return $result['sco']['@attributes']['sco-id'];
     }
@@ -236,10 +236,10 @@ class AdobeConnectClient {
     public function inviteUserToMeeting($meeting_id, $email) {
         $user_id = $this->getUserByEmail($email, true);
         $result = $this->makeRequest('permissions-update', array(
-            'principal-id' => $user_id,
-            'acl-id' => $meeting_id,
-            'permission-id' => 'view'
-                )
+                'principal-id' => $user_id,
+                'acl-id' => $meeting_id,
+                'permission-id' => 'view'
+            )
         );
         return $result;
     }

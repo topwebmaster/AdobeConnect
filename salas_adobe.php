@@ -31,9 +31,9 @@ foreach ($mettings['my-meetings']['meeting'] as $k => $v) {
 
 
     /*     * ***** Comentar esto si se quiere ver solo salas   *** */
-    $folder = $v['@attributes']['sco-id'];
-    $records = $client->getRecordings($folder);
-    $sesiones = $client->getReportSessions($folder);
+    $folder     = $v['@attributes']['sco-id'];
+    $records    = $client->getRecordings($folder);
+    $sesiones   = $client->getReportSessions($folder);
     
     //echo "<pre>";
     //print_r($records);
@@ -43,15 +43,15 @@ foreach ($mettings['my-meetings']['meeting'] as $k => $v) {
         if ($records['recordings']['sco'][0]) {
 
             foreach ($records['recordings']['sco'] as $value) {
-                $ul = "";
-                $acl_id = $value['@attributes']['sco-id'];
-                $comment = (isset($value['description'])) ? $value['description'] : '';
+                $ul         = "";
+                $acl_id     = $value['@attributes']['sco-id'];
+                $comment    = (isset($value['description'])) ? $value['description'] : '';
 
-                $ul .= "<table class='userlist'>" . 
-                    "<tr><th width='300'>Usuario</th>" . 
-                    "<th width='200'>Hora Inicio</th>" . 
-                    "<th width='200'>Hora Fin</th>" . 
-                    "<th width='200'>Tiempo de conexi&oacute;n</th></tr>";
+                $ul .= "<table class='table'>" . 
+                    "<tr><th width='300' class='th'>Usuario</th>" . 
+                    "<th width='200' class='th'>Hora Inicio</th>" . 
+                    "<th width='200' class='th'>Hora Fin</th>" . 
+                    "<th width='200' class='th'>Tiempo de conexi&oacute;n</th></tr>";
                 foreach ($sesiones['report-meeting-sessions']['row'] as $v) {
                     $brec = strtotime($value['date-begin']);
                     $erec = strtotime($value['date-end']);
@@ -60,15 +60,16 @@ foreach ($mettings['my-meetings']['meeting'] as $k => $v) {
                     $eses = strtotime($v['date-end']);
 
                     if($brec >= $bses && $erec <= $eses){
-                        $asset_id = $v['@attributes']['asset-id'];
-                        $attendance = $client->getReportMeetingSessionUser($folder, $asset_id);
 
-                        $onside = unique_multidim_array($attendance['report-meeting-session-users']['row'], "principal-name");
+                        $asset_id   = $v['@attributes']['asset-id'];
+                        $attendance = $client->getReportMeetingSessionUser($folder, $asset_id);
+                        $onside     = unique_multidim_array($attendance['report-meeting-session-users']['row'], "principal-name");
+
                         foreach ($onside as $usersession) {
-                            $ul .= "<tr><td>".trim($usersession['principal-name'])."</td>" . 
-                                "<td align='center'>".stristr($usersession['date-created'],"T")."</td>" . 
-                                "<td align='center'>".stristr($usersession['date-end'],"T")."</td>" . 
-                                "<td align='center'>".conversor_segundos((strtotime($usersession['date-end']) - 
+                            $ul .= "<tr><td class='td'>".trim($usersession['principal-name'])."</td>" . 
+                                "<td align='center' class='td'>".stristr($usersession['date-created'],"T")."</td>" . 
+                                "<td align='center' class='td'>".stristr($usersession['date-end'],"T")."</td>" . 
+                                "<td align='center' class='td'>".conversor_segundos((strtotime($usersession['date-end']) - 
                                     strtotime($usersession['date-created'])))."</td></tr>";
                         }
                     }
@@ -85,20 +86,20 @@ foreach ($mettings['my-meetings']['meeting'] as $k => $v) {
                 $client->setPublicRecordings($acl_id);
             }
         } else {
-            $ul = "";
-            $name = $records['recordings']['sco']['name'];
-            $url = $records['recordings']['sco']['url-path'];
-            $acl_id = $records['recordings']['sco']['@attributes']['sco-id'];
-            $duration = $records['recordings']['sco']['duration'];
-            $fecha = $records['recordings']['sco']['date-begin'];
-            $comment = (isset($records['recordings']['sco']['description'])) ? $records['recordings']['sco']['description'] : '';
+            $ul         = "";
+            $name       = $records['recordings']['sco']['name'];
+            $url        = $records['recordings']['sco']['url-path'];
+            $acl_id     = $records['recordings']['sco']['@attributes']['sco-id'];
+            $duration   = $records['recordings']['sco']['duration'];
+            $fecha      = $records['recordings']['sco']['date-begin'];
+            $comment    = (isset($records['recordings']['sco']['description'])) ? $records['recordings']['sco']['description'] : '';
 
 
-            $ul .= "<table class='userlist'>" . 
-                "<tr><th width='300'>Usuario</th>" . 
-                "<th width='200'>Hora Inicio</th>" . 
-                "<th width='200'>Hora Fin</th>" . 
-                "<th width='200'>Tiempo de conexi&oacute;n</th></tr>";
+            $ul .= "<table class='table'>" . 
+                "<tr><th width='300' class='th'>Usuario</th>" . 
+                "<th width='200' class='th'>Hora Inicio</th>" . 
+                "<th width='200' class='th'>Hora Fin</th>" . 
+                "<th width='200' class='th'>Tiempo de conexi&oacute;n</th></tr>";
             foreach ($sesiones['report-meeting-sessions']['row'] as $v) {
                 $brec = strtotime($records['recordings']['sco']['date-begin']);
                 $erec = strtotime($records['recordings']['sco']['date-end']);
@@ -107,14 +108,14 @@ foreach ($mettings['my-meetings']['meeting'] as $k => $v) {
                 $eses = strtotime($v['date-end']);
 
                 if($brec >= $bses && $erec <= $eses){
-                    $asset_id = $v['@attributes']['asset-id'];
+                    $asset_id   = $v['@attributes']['asset-id'];
                     $attendance = $client->getReportMeetingSessionUser($folder, $asset_id);
-                    $onside = unique_multidim_array($attendance['report-meeting-session-users']['row'], "principal-name");
+                    $onside     = unique_multidim_array($attendance['report-meeting-session-users']['row'], "principal-name");
                     foreach ($onside as $usersession) {
-                        $ul .= "<tr><td>".trim($usersession['principal-name'])."</td>" . 
-                            "<td align='center'>".stristr($usersession['date-created'],"T")."</td>" . 
-                            "<td align='center'>".stristr($usersession['date-end'],"T")."</td>" . 
-                            "<td align='center'>".conversor_segundos((strtotime($usersession['date-end']) - 
+                        $ul .= "<tr><td class='td'>".trim($usersession['principal-name'])."</td>" . 
+                            "<td align='center' class='td'>".stristr($usersession['date-created'],"T")."</td>" . 
+                            "<td align='center' class='td'>".stristr($usersession['date-end'],"T")."</td>" . 
+                            "<td align='center' class='td'>".conversor_segundos((strtotime($usersession['date-end']) - 
                                 strtotime($usersession['date-created']))) . "</td></tr>";
                     }
                 }
@@ -158,28 +159,42 @@ $table .= "</table>";
                 font-size: 14px;
                 font-weight: bold;
             }
-            .trheader{
-                text-align: center;
-                font-weight: bold;
-                border-bottom: #000 solid 1px;
+
+            .table {     
+                font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+                font-size: 12px;
+                margin: 45px;
+                width: 800px; 
+                /*text-align: left;*/
+                border-collapse: collapse; 
             }
-            .main_div{
-                margin: 0;
-                overflow: hidden;
-                width: 100%;
+
+            .th {     
+                font-size: 13px;
+                font-weight: normal;
+                padding: 8px;     
+                background: #b9c9fe;
+                border-top: 4px solid #aabcfe;    
+                border-bottom: 1px solid #fff; 
+                color: #039; 
             }
-            .li_celdas{
-                margin: 0;
-                float: left;
-                display: table-cell;
-                padding: 5px;
-                /*width: 100%;*/
+
+            .td {    
+                padding: 8px;     
+                background: #e8edff;    
+                border-bottom: 1px solid #fff;
+                color: #669;    
+                border-top: 1px solid transparent; 
+            }
+
+            .tr:hover .td { 
+                background: #d0dafd; color: #339; 
             }
         </style>
         <script type="text/javascript" src="jquery-2.1.4.js"></script>
         <script type="text/javascript">
             $(document).ready(function(){
-                $('.userlist').css({display:'none'});
+                $('.table').css({display:'none'});
                 $('.attendance').css({cursor:'pointer'});
                 $('.attendance').each(function(){
                     $(this).click(function(){
