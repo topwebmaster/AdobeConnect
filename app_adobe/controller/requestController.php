@@ -9,13 +9,18 @@ class requestController {
 
         $template = file_get_contents('app_adobe/views/salas_adobe.php');
 
-        $salas_regexp = "/<!--salas-->(.|\n){1,}<!--finsalas-->/";
+        $salas_regexp   = "/<!--salas-->(.|\n){1,}<!--finsalas-->/";
         $records_regexp = "/<!--grabacion-->(.|\n){1,}<!--fingrabacion-->/";
-        $user_regexp = "/<!--asistentes-->(.|\n){1,}<!--finasistentes-->/";
+        $user_regexp    = "/<!--asistentes-->(.|\n){1,}<!--finasistentes-->/";
+
+
 
         preg_match($salas_regexp, $template, $salasMatch);
-        preg_match($records_regexp, $template, $recordsMatch);
-        preg_match($user_regexp, $template, $userMatch);
+        if (preg_last_error() == PREG_BACKTRACK_LIMIT_ERROR) {
+            print 'Backtrack limit was exhausted!';
+        }
+        //preg_match($records_regexp, $template, $recordsMatch);
+        //preg_match($user_regexp, $template, $userMatch);
 
         require("common/libs/AdobeConnectClient.class.php");
         require('common/tools/library.php');

@@ -2,77 +2,9 @@
 <html>
     <head>
         <title>API Adobe Connect</title>
-        <style type="text/css">
-            body{
-                background: #f4f4f4;
-                font-family: "Arial", sans-serif;
-                font-size: 12px;
-                color: #666;
-            }
-
-            #container{
-                width: 1300px;
-                margin: auto;
-                overflow: auto;
-                background: #fff;
-                padding: 15px;
-            }
-            .salas{
-                font-size: 14px;
-                font-weight: bold;
-            }
-
-            .table {     
-                font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
-                font-size: 12px;
-                margin: 45px;
-                width: 800px; 
-                /*text-align: left;*/
-                border-collapse: collapse; 
-            }
-
-            .th {     
-                font-size: 13px;
-                font-weight: normal;
-                padding: 8px;     
-                background: #b9c9fe;
-                border-top: 4px solid #aabcfe;    
-                border-bottom: 1px solid #fff; 
-                color: #039; 
-            }
-
-            .td {    
-                padding: 8px;     
-                background: #e8edff;    
-                border-bottom: 1px solid #fff;
-                color: #669;    
-                border-top: 1px solid transparent; 
-            }
-
-            .tr:hover .td { 
-                background: #d0dafd; color: #339; 
-            }
-        </style>
+        <link href="statics/media/css/style.css" rel="stylesheet" type="text/css" />
         <script type="text/javascript" src="statics/js/jquery-2.1.4.js"></script>
-        <script type="text/javascript">
-            $(document).ready(function(){
-                //$('.table').css({display:'none'});
-                $('.attendance').css({cursor:'pointer'});
-                $('.attendance').each(function(){
-                    $(this).click(function(){
-                        $(this).next().find('table').toggle('slow', 'linear');
-                    });
-                });
-
-                var btn = document.getElementById('btnxls');
-                btn.addEventListener("click", function(){
-                    var html = document.getElementById('tblsalas').outerHTML;
-                    window.open('data:application/vnd.ms-excel,' + encodeURIComponent(html));
-                });
-            });
-
-            
-        </script>
+        <script type="text/javascript" src="statics/media/js/utils.js"></script>
     </head>
     <body>
         <div id="container">
@@ -101,7 +33,7 @@
                 <!--grabacion-->
                 <tr class='attendance'>
                     <td>&nbsp;</td>
-                    <td>{fecha-nombre}</td>
+                    <td>{fechanombre}</td>
                     <td valign='top'>{duracion}</td>
                     <td valign='top'><a href='https://utp.adobeconnect.com/{linkrec}' target='_blank'>{linkrec}</a></td> 
                     <td valign='top'>{comentario}</td>
