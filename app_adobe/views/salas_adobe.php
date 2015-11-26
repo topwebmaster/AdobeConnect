@@ -44,9 +44,9 @@ foreach ($mettings['my-meetings']['meeting'] as $v) {
     $folder = $v['@attributes']['sco-id'];
     $records = $client->getRecordings($folder);
     $sesiones = $client->getReportSessions($folder);
-    /* echo "<pre>";
-      print_r($records);
-      continue; */
+    /*echo "<pre>";
+    print_r($records);
+    continue;*/
     if (!empty($records['recordings'])) {
 
         if ($records['recordings']['sco'][0]) {
@@ -63,6 +63,8 @@ foreach ($mettings['my-meetings']['meeting'] as $v) {
                     /*                     * ** Usuarios por grabacion * */
                     $ul .= "<table class='table'>" .
                             "<tr><th width='300' class='th'>Usuario</th>" .
+                            //"<th width='300' class='th'>Inicio</th>" .
+                            //"<th width='300' class='th'>Fin</th>" .
                             "<th width='200' class='th'>Tiempo de conexi&oacute;n</th></tr>";
                     foreach ($sesiones['report-meeting-sessions']['row'] as $v) {
                         $brec = strtotime($value['date-begin']);
@@ -75,14 +77,26 @@ foreach ($mettings['my-meetings']['meeting'] as $v) {
 
                             $asset_id = $v['@attributes']['asset-id'];
                             $attendance = $client->getReportMeetingSessionUser($folder, $asset_id);
-                            /* echo "<pre>";
-                              print_r($attendance);
-                              continue; */
+                            /*echo "<pre>";
+                            print_r($attendance);
+                            continue;*/
                             $onside = unique_multidim_array(
-                                    $attendance['report-meeting-session-users']['row'], 'principal-name', $value['date-created'], $value['date-end']
+                                $attendance['report-meeting-session-users']['row'], 'principal-name', $value['date-created'], $value['date-end']
                             );
-
+                            /*$onside     = $attendance['report-meeting-session-users']['row'];
                             foreach ($onside as $key => $usersession) {
+                                $ul .= "<tr><td class='td'>" . $usersession['principal-name'] . "</td>" .
+                                        "<td class='td'>" . $usersession['date-created'] . "</td>" .
+                                        "<td class='td'>" . $usersession['date-end'] . "</td>" .
+                                        "<td align='center' class='td'>dfsfdfsdf</td></tr>";
+                            }*/
+                            /*echo "<pre>";
+                            print_r($onside);
+                            continue;*/
+                            foreach ($onside as $key => $usersession) {
+                                if(strlen($key) == 1)
+                                    continue;
+                                
                                 $ul .= "<tr><td class='td'>" . $key . "</td>" .
                                         "<td align='center' class='td'>" . $usersession['TCon'] . "</td></tr>";
                             }
@@ -120,6 +134,8 @@ foreach ($mettings['my-meetings']['meeting'] as $v) {
                 /*                 * ** Usuarios por grabacion * */
                 $ul .= "<table class='table'>" .
                         "<tr><th width='300' class='th'>Usuario</th>" .
+                        //"<th width='300' class='th'>Inicio</th>" .
+                        //"<th width='300' class='th'>Fin</th>" .
                         "<th width='200' class='th'>Tiempo de conexi&oacute;n</th></tr>";
                 foreach ($sesiones['report-meeting-sessions']['row'] as $v) {
                     $brec = strtotime($records['recordings']['sco']['date-begin']);
@@ -136,7 +152,17 @@ foreach ($mettings['my-meetings']['meeting'] as $v) {
                         );
                         //$onside     = $attendance['report-meeting-session-users']['row'];
 
+                        /*foreach ($onside as $key => $usersession) {
+                            $ul .= "<tr><td class='td'>" . $usersession['principal-name'] . "</td>" .
+                                    "<td class='td'>" . $usersession['date-created'] . "</td>" .
+                                    "<td class='td'>" . $usersession['date-end'] . "</td>" .
+                                    "<td align='center' class='td'>dfsfdfsdf</td></tr>";
+                        }*/
+
                         foreach ($onside as $key => $usersession) {
+                            if(strlen($key) == 1)
+                                continue;
+
                             $ul .= "<tr><td class='td'>" . $key . "</td>" .
                                     "<td align='center' class='td'>" . $usersession['TCon'] . "</td></tr>";
                         }

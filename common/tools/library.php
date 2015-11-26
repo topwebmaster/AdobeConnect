@@ -14,37 +14,31 @@ function unique_multidim_array($array, $key, $start, $end) {
         $startsesion = strtotime($val['date-created']); // inicio de sesion
         $endsesion = strtotime($val['date-end']); // fin de sesion
 
-        if ($start >= $startsesion) {
-            if ($end >= $endsesion) {
-                //considerar
-                $considerar = true;
-            } else {
-                // no considerar
-                $considerar = false;
+        if ($startsesion < $start){
+            if($endsesion < $start || ($start - $startsesion) > 1800){
+                continue;
             }
-        } elseif (($endsesion - 300) <= $end) {
-            // considerar
-            $considerar = true;
-        } else {
-            // no considerar
-            $considerar = false;
+            $startsesion = $start;
+        } else if ($startsesion > $end) {
+            continue;
         }
 
-        if (!$considerar) {
-            continue;
+        if ($endsesion > $end) {
+            $endsesion = $end;
         }
 
         if (!in_array($val[$key], $key_array)) {
             $key_array[$i] = $val[$key];
-            $suma_array[$val[$key]]['CN'] = (strtotime($val['date-end']) - strtotime($val['date-created']));
+            $suma_array[$val[$key]]['CN'] = ($endsesion - $startsesion);
         } else {
-            $suma_array[$val[$key]]['CN'] += (strtotime($val['date-end']) - strtotime($val['date-created']));
+            $suma_array[$val[$key]]['CN'] += ($endsesion - $startsesion);
         }
 
         $suma_array[$val[$key]]['TCon'] = conversor_segundos($suma_array[$val[$key]]['CN']);
 
         $i++;
     }
+    unset($val);
     return $suma_array;
 }
 
