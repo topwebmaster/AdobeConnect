@@ -18,14 +18,10 @@
                 padding: 15px;
             }
         </style>
-        <link href="statics/css/jquery-ui.css" rel="stylesheet" type="text/css">
-
         <script type="text/javascript" src="statics/js/jquery-2.1.4.js"></script>
-        <script type="text/javascript" src="statics/js/jquery-ui.js"></script>
         <script type="text/javascript" src="statics/js/jquery.ctools.js"></script>
         <script type="text/javascript">
             $(document).ready(function () {
-                $('#textdesde, #texthasta').datepicker();
                 $('#btn_send').click(function () {
                     $('#select_salas').validate({
                         required: true,
@@ -46,7 +42,7 @@
             <form name="frmsalas" id="frmsalas" method="post" action="index.php">
                 <h1>Adobe connect</h1>
                 <input type="hidden" name="req" value="request" />
-                <input type="hidden" name="mod" value="getList" />
+                <input type="hidden" name="mod" value="getListSessions" />
                 <table>
                     <tr>
                         <td><label for="select_salas">Seleccione una sala: </label></td>
@@ -60,14 +56,6 @@
                                 ?>
                             </select>
                         </td>
-                    </tr>
-                    <tr>
-                        <td><label for="textdesde">Desde: </label></td>
-                        <td><input type="text" name="textdesde" id="textdesde" /></td>
-                    </tr>
-                    <tr>
-                        <td><label for="texthasta">Hasta: </label></td>
-                        <td><input type="text" name="texthasta" id="texthasta" /></td>
                     </tr>
                 </table>
                 <input type="button" id="btn_send" value="Consultar" />

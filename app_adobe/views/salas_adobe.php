@@ -63,8 +63,6 @@ foreach ($mettings['my-meetings']['meeting'] as $v) {
                     /*                     * ** Usuarios por grabacion * */
                     $ul .= "<table class='table'>" .
                             "<tr><th width='300' class='th'>Usuario</th>" .
-                            //"<th width='300' class='th'>Inicio</th>" .
-                            //"<th width='300' class='th'>Fin</th>" .
                             "<th width='200' class='th'>Tiempo de conexi&oacute;n</th></tr>";
                     foreach ($sesiones['report-meeting-sessions']['row'] as $v) {
                         $brec = strtotime($value['date-begin']);
@@ -77,22 +75,11 @@ foreach ($mettings['my-meetings']['meeting'] as $v) {
 
                             $asset_id = $v['@attributes']['asset-id'];
                             $attendance = $client->getReportMeetingSessionUser($folder, $asset_id);
-                            /*echo "<pre>";
-                            print_r($attendance);
-                            continue;*/
+
                             $onside = unique_multidim_array(
                                 $attendance['report-meeting-session-users']['row'], 'principal-name', $value['date-created'], $value['date-end']
                             );
-                            /*$onside     = $attendance['report-meeting-session-users']['row'];
-                            foreach ($onside as $key => $usersession) {
-                                $ul .= "<tr><td class='td'>" . $usersession['principal-name'] . "</td>" .
-                                        "<td class='td'>" . $usersession['date-created'] . "</td>" .
-                                        "<td class='td'>" . $usersession['date-end'] . "</td>" .
-                                        "<td align='center' class='td'>dfsfdfsdf</td></tr>";
-                            }*/
-                            /*echo "<pre>";
-                            print_r($onside);
-                            continue;*/
+
                             foreach ($onside as $key => $usersession) {
                                 if(strlen($key) == 1)
                                     continue;
@@ -134,8 +121,6 @@ foreach ($mettings['my-meetings']['meeting'] as $v) {
                 /*                 * ** Usuarios por grabacion * */
                 $ul .= "<table class='table'>" .
                         "<tr><th width='300' class='th'>Usuario</th>" .
-                        //"<th width='300' class='th'>Inicio</th>" .
-                        //"<th width='300' class='th'>Fin</th>" .
                         "<th width='200' class='th'>Tiempo de conexi&oacute;n</th></tr>";
                 foreach ($sesiones['report-meeting-sessions']['row'] as $v) {
                     $brec = strtotime($records['recordings']['sco']['date-begin']);
@@ -150,14 +135,6 @@ foreach ($mettings['my-meetings']['meeting'] as $v) {
                         $onside = unique_multidim_array(
                                 $attendance['report-meeting-session-users']['row'], "principal-name", $creation, $end
                         );
-                        //$onside     = $attendance['report-meeting-session-users']['row'];
-
-                        /*foreach ($onside as $key => $usersession) {
-                            $ul .= "<tr><td class='td'>" . $usersession['principal-name'] . "</td>" .
-                                    "<td class='td'>" . $usersession['date-created'] . "</td>" .
-                                    "<td class='td'>" . $usersession['date-end'] . "</td>" .
-                                    "<td align='center' class='td'>dfsfdfsdf</td></tr>";
-                        }*/
 
                         foreach ($onside as $key => $usersession) {
                             if(strlen($key) == 1)
@@ -198,13 +175,13 @@ $table .= "</table>";
     <body>
         <div id="container">
             <h1 style="display: inline;">Moderador <?php echo $user; ?> / Grabaciones</h1>&nbsp;&nbsp;&nbsp;&nbsp;
-            <input type="button" id="btnxls" value="ExportarXLS" />
+            <!--<input type="button" id="btnxls" value="ExportarXLS" />-->
             <input type="hidden" name="download" value="<?php echo $user; ?>">
             <span style="float: right;"><a href="index.php">&laquo; Volver</a></span>
             <hr>
-<?php
-print $table;
-?>
+            <?php
+                print $table;
+            ?>
         </div>
     </body>
 </html>

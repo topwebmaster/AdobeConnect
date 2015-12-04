@@ -324,7 +324,7 @@ class AdobeConnectClient {
         $data = json_decode($json, TRUE); // nice hack!
 
         if (!isset($data['status']['@attributes']['code']) || $data['status']['@attributes']['code'] !== 'ok') {
-            throw new Exception('Error: ' . $action);
+            throw new Exception('Error: ' . print_r($data));
         }
         return $data;
     }
