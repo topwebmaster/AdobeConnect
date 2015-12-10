@@ -98,9 +98,9 @@ class requestController {
      * @return json
      */
     function getUserSession() {
-        $sco_id = $_POST['sco_id'];
-        $date_record_ini = $_POST['date_record_ini'];
-        $date_record_fin = $_POST['date_record_fin'];
+        $sco_id = $_GET['sco_id'];
+        $date_record_ini = $_GET['date_record_ini'];
+        $date_record_fin = $_GET['date_record_fin'];
 
         $sesiones = $this->cliente->getReportSessions($sco_id);
 
