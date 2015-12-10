@@ -14,7 +14,7 @@ $(document).ready(function () {
 
         pos = haystack.toLowerCase().indexOf((needle + '').toLowerCase());
 
-        if (pos == -1) {
+        if (pos === -1) {
             return false;
         } else {
             if (bool) {
@@ -88,27 +88,27 @@ $(document).ready(function () {
                     date_record_ini: date_record_ini,
                     date_record_fin: date_record_fin
                 })
-                        .done(function (data) {
-                            var json = data;
+                .done(function (data) {
+                    var json = data;
 
-                            var html = '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">' +
-                                    '<tr>' +
-                                    '<th width="300">Usuario</th>' +
-                                    '<th width="200">Tiempo de conexión</th>' +
-                                    '</tr>';
+                    var html = '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">' +
+                            '<tr>' +
+                            '<th width="300">Usuario</th>' +
+                            '<th width="200">Tiempo de conexión</th>' +
+                            '</tr>';
 
-                            for (var i in json.usuarios) {
-                                html += '<tr>' +
-                                        '<td>' + i + '</td>' +
-                                        '<td>' + json.usuarios[i]['TCon'] + '</td>' +
-                                        '</tr>';
-                            }
-                            ;
-                            html += '</table>';
+                    for (var i in json.usuarios) {
+                        html += '<tr>' +
+                                '<td>' + i + '</td>' +
+                                '<td>' + json.usuarios[i]['TCon'] + '</td>' +
+                                '</tr>';
+                    }
+                    ;
+                    html += '</table>';
 
-                            rows.child(html).show();
-                            tr.addClass('shown');
-                        });
+                    rows.child(html).show();
+                    tr.addClass('shown');
+                });
             }
         });
     }
