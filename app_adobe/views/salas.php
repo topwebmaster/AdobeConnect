@@ -19,11 +19,11 @@
             <hr>
             <label for="sessions">Salas: </label>
             <select id="sessions">
-				<option value="0">.:: Seleccione ::.</option>
-				<!--salas-->
-				<option value="{scoid}" title="{date}">{salas}</option>
-				<!--finsalas-->
-			</select><br /><br /><br />
+                <option value="0">.:: Seleccione ::.</option>
+                <!--salas-->
+                <option value="{scoid}" title="{date}">{salas}</option>
+                <!--finsalas-->
+            </select><br /><br /><br />
             <label for="fechainicio">Desde: </label>
             <input type="text" id="fechainicio" />&nbsp;&nbsp;&nbsp;
             <label for="fechafin">Hasta: </label>

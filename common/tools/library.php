@@ -14,8 +14,8 @@ function unique_multidim_array($array, $key, $start, $end) {
         $startsesion = strtotime($val['date-created']); // inicio de sesion
         $endsesion = strtotime($val['date-end']); // fin de sesion
 
-        if ($startsesion < $start){
-            if($endsesion < $start || ($start - $startsesion) > 1800){
+        if ($startsesion < $start) {
+            if ($endsesion < $start || ($start - $startsesion) > 1800) {
                 continue;
             }
             $startsesion = $start;
@@ -39,7 +39,7 @@ function unique_multidim_array($array, $key, $start, $end) {
         $i++;
     }
     unset($val);
-    return $suma_array;
+    return (!empty($suma_array)) ? $suma_array : null;
 }
 
 function conversor_segundos($seg_ini) {

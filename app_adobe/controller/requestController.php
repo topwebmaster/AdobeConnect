@@ -2,15 +2,25 @@
 
 class requestController {
 
+    /**
+     * Almacena toda la informacion del cliente
+     * @var Object
+     */
     private $cliente;
+
+    /**
+     * Almacena el usuario moderador enviado por post
+     * @var String
+     */
     private $room;
 
-    public function __construct(){
+    public function __construct() {
         session_start();
         set_time_limit(0);
         error_reporting(0);
 
         require("common/libs/AdobeConnectClient.class.php");
+        require("common/tools/library.php");
 
         $this->cliente = new AdobeConnectClient();
 
@@ -52,23 +62,20 @@ class requestController {
         print $html;
     }
 
-    function getRec(){
+    function getRec() {
         $rec = $_POST['sco_id'];
         $records = $this->cliente->getRecordings($rec);
 
         $begrecord = ($_POST['inicio'] == "") ? $_POST['tbegin'] : $_POST['inicio'];
         $endrecord = ($_POST['finald'] == "") ? date('Y-m-d') : $_POST['finald'];
 
-        $_SESSION['fbegin'] = $begrecord;
-        $_SESSION['fend']   = $endrecord;
-
-        if(!empty($records['recordings'])){
-            if($records['recordings']['sco'][0]){
+        if (!empty($records['recordings'])) {
+            if ($records['recordings']['sco'][0]) {
                 $data = $records['recordings']['sco'];
-            }else{
+            } else {
                 $data[] = $records['recordings']['sco'];
             }
-        }else{
+        } else {
             $recData->data[]['name'] = 'Sin registros';
             echo json_encode($recData);
             exit;
@@ -86,20 +93,31 @@ class requestController {
         echo json_encode($recData);
     }
 
-    function getUserSession(){
+    /**
+     * Obtiene el listado de usuarios por cada sesion
+     * @return json
+     */
+    function getUserSession() {
         $sco_id = $_POST['sco_id'];
-
-        echo $sco_id;
-
-        exit;
+        $date_record_ini = $_POST['date_record_ini'];
+        $date_record_fin = $_POST['date_record_fin'];
 
         $sesiones = $this->cliente->getReportSessions($sco_id);
 
         foreach ($sesiones['report-meeting-sessions']['row'] as $value) {
-            $asset_id = $value['@attributes']['asset-id'];
+            $attendance = $this->cliente->getReportMeetingSessionUser($sco_id, $value['@attributes']['asset-id']);
+            $filtrado = unique_multidim_array(
+                    $attendance['report-meeting-session-users']['row'], "principal-name", $date_record_ini, $date_record_fin
+            );
 
-            $attendance = $this->cliente->getReportMeetingSessionUser($sco_id, $asset_id);
+            if ($filtrado != null) {
+                $considerar = $filtrado;
+            }
         }
+
+        $json->usuarios = $considerar;
+
+        echo json_encode($json);
     }
 
 }
