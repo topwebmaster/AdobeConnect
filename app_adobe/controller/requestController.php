@@ -34,6 +34,10 @@ class requestController {
         $_SESSION['room'] = $this->room;
     }
 
+    /**
+     * Obtiene el listado de salas creadas por cada Moderador
+     * @return void
+     */
     function getListSessions() {
         $replaced = "";
 
@@ -62,6 +66,10 @@ class requestController {
         print $html;
     }
 
+    /**
+     * Obtiene el listado de grabaciones por cada sala en un intervalo de fechas
+     * @return json
+     */
     function getRec() {
         $rec = $_POST['sco_id'];
         $records = $this->cliente->getRecordings($rec);

@@ -28,6 +28,8 @@ $(document).ready(function () {
     function generarReportesGrabacion(sco_id, inicio, finald, tbegin) {
 
         var tablejs = "";
+        var tr = "";
+        var rows = "";
 
         var tables = $.fn.dataTable.fnTables(true);
         $(tables).each(function () {
@@ -72,8 +74,8 @@ $(document).ready(function () {
         $('#grabaciones').removeClass('grabaciones');
 
         $('#recordings tbody').on("click", "td.details-control", function () {
-            var tr = $(this).closest("tr");
-            var rows = tablejs.row(tr);
+            tr = $(this).closest("tr");
+            rows = tablejs.row(tr);
 
             if (rows.child.isShown()) {
                 rows.child.hide();
