@@ -57,18 +57,18 @@ $(document).ready(function () {
                     'defaultContent': ''
                 },
                 {'data': function (row) {
-                        return (typeof row['date-begin'] === "undefined") ? ''
-                                : '<span title="' + row['date-begin'] + '">' + stristr(row['date-begin'], "T", true) + '</span>';
-                    }},
+                    return (typeof row['date-begin'] === "undefined") ? ''
+                        : '<span title="' + row['date-begin'] + '">' + stristr(row['date-begin'], "T", true) + '</span>';
+                }},
                 {'data': 'name'},
                 {'data': function (row) {
-                        return (typeof row['duration'] === 'undefined') ? ''
-                                : '<span title="' + row['date-end'] + '">' + stristr(row['duration'], ".", true) + '</span>';
-                    }},
+                    return (typeof row['duration'] === 'undefined') ? ''
+                        : '<span title="' + row['date-end'] + '">' + stristr(row['duration'], ".", true) + '</span>';
+                }},
                 {'data': function (row) {
-                        return (typeof row['url-path'] === "undefined") ? ''
-                                : '<a href="https://utp.adobeconnect.com' + row['url-path'] + '" target="_blank">Ir a la sala...</a>'
-                    }}
+                    return (typeof row['url-path'] === "undefined") ? ''
+                        : '<a href="https://utp.adobeconnect.com' + row['url-path'] + '" target="_blank">Ir a la sala...</a>'
+                }}
             ]
         });
         $('#grabaciones').removeClass('grabaciones');

@@ -74,7 +74,7 @@ class requestController {
         $rec = $_POST['sco_id'];
         $records = $this->cliente->getRecordings($rec);
 
-        $begrecord = ($_POST['inicio'] == "") ? $_POST['tbegin'] : $_POST['inicio'];
+        $begrecord = ($_POST['inicio'] == "") ? $_POST['tbegin'] : strtotime($_POST['inicio']);
         $endrecord = ($_POST['finald'] == "") ? date('Y-m-d') : $_POST['finald'];
 
         if (!empty($records['recordings'])) {
@@ -93,11 +93,10 @@ class requestController {
             $acl_id = $value['@attributes']['sco-id'];
             $this->cliente->setPublicRecordings($acl_id);
             $date_created = strtotime(date('Y-m-d', strtotime($value['date-created'])));
-            if ($date_created >= strtotime($begrecord) && $date_created <= strtotime($endrecord)) {
+            if ($date_created >= $begrecord && $date_created <= strtotime($endrecord)) {
                 $recData->data[] = $data[$key];
             }
         }
-
         echo json_encode($recData);
     }
 
