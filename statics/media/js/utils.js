@@ -38,6 +38,11 @@ $(document).ready(function () {
         });
 
         tablejs = $('#recordings').DataTable({
+            'language': {
+                'zeroRecords': 'No hay registros disponibles',
+                "infoEmpty": "Sin registros que mostrar",
+                "loadingRecords": "Cargando..."
+            },
             "ajax": {
                 'type': 'POST',
                 'url': 'index.php?req=request&mod=getRec',
